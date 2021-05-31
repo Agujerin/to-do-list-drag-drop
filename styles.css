@@ -1,0 +1,80 @@
+* {
+    font-family: sans-serif;
+}
+
+/* PRÁCTICA 1: To do list + drag&drop */
+.form-container {
+    border-radius: 10px;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,0.1),0 0px 0 1px rgba(10,10,10,0.02);
+    padding: 20px;
+    padding-bottom: 50px;
+    margin-bottom: 10px;
+}
+
+.task-input {
+    height: 25px;
+    width: 520px;
+    border: none;
+    border-bottom: 1px solid black;
+}
+
+.date-input {
+    height: 25px;
+    margin-left: 6px;
+}
+
+.color-input {
+    border: none;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.button {
+    height: 25px;
+}
+
+.validation {
+    color: red;
+    font-weight: bold;
+    position: fixed;
+}
+
+.list-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    height: 350px;
+    box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,0.1),0 0px 0 1px rgba(10,10,10,0.02);
+}
+
+.task-list,
+.finished-tasks{
+    background-color: rgba(195, 209, 195, 0.603);
+    border-radius: 10px;
+}
+
+.finished-tasks__title,
+.task-list__title {
+    text-align: center;
+}
+
+.list {
+    list-style: none; 
+}
+
+.list li {
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 6px;
+    max-width: 90%;
+}
+
+.list i {
+    cursor: pointer;
+}
+
+.active-task {
+    opacity: 50%;
+}
