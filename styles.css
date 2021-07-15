@@ -1,62 +1,106 @@
 * {
-    font-family: sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
 }
 
-/* PRÁCTICA 1: To do list + drag&drop */
+body {
+    font-family: courier, sans-serif;
+}
+
 .form-container {
-    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    margin-bottom: .6em;
+    border-radius: .6em;
     box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,0.1),0 0px 0 1px rgba(10,10,10,0.02);
-    padding: 20px;
-    padding-bottom: 50px;
-    margin-bottom: 10px;
+}
+
+.title {
+    padding: 1rem;
+}
+
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 90%;
+    margin-bottom: 1em;
 }
 
 .task-input {
-    height: 25px;
-    width: 520px;
+    width: 70%;
+    height: 2.5rem;
+    margin-bottom: .6em;
     border: none;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid #83f28c;
+}
+
+.task-input:focus {
+    outline-style: none;
+    background-color: transparent;
 }
 
 .date-input {
-    height: 25px;
-    margin-left: 6px;
+    height: 2.5rem;
+    border: 2px solid rgb(62, 255, 62);
 }
 
 .color-input {
+    height: 2.5rem;
     border: none;
-    margin-left: 6px;
-    margin-right: 6px;
 }
 
 .button {
-    height: 25px;
+    width: 3.5rem;
+    height: 2.5rem;
+    border: 2px solid rgb(62, 255, 62);
+    border-radius: .5em;
+    color: rgb(62, 255, 62);
+    font-weight: bold;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.button:hover {
+    color: #fff;
+    background-color: rgb(62, 255, 62);
+    transition: background-color .5s ease-in-out;
+    
 }
 
 .validation {
-    color: red;
+    position: absolute;
+    width: 90%;
+    padding: 1em;
+    border-radius: .6em;
+    background-color: rgb(247, 29, 29);
+    color: #fff;
     font-weight: bold;
-    position: fixed;
 }
 
 .list-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    border-radius: 10px;
-    padding: 20px;
-    height: 350px;
+    height: 21rem;
+    gap: .6em;
+    border-radius: .6em;
+    padding: 1em;
     box-shadow: 0 0.5em 1em -0.125em rgba(10,10,10,0.1),0 0px 0 1px rgba(10,10,10,0.02);
 }
 
 .task-list,
 .finished-tasks{
+    padding: 1em;
+    border-radius: .6em;
     background-color: rgba(195, 209, 195, 0.603);
-    border-radius: 10px;
 }
 
-.finished-tasks__title,
 .task-list__title {
+    padding-bottom: 1em;
     text-align: center;
 }
 
@@ -65,10 +109,9 @@
 }
 
 .list li {
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 6px;
-    max-width: 90%;
+    padding: .6em;
+    border-radius: .6em;
+    margin-bottom: .6em;
 }
 
 .list i {
@@ -77,4 +120,13 @@
 
 .active-task {
     opacity: 50%;
+}
+
+@media (max-width: 500px){
+    .task-input {
+        width: 100%;
+    }
+    .list li {
+        text-align: center;
+    }
 }

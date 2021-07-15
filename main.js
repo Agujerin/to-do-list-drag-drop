@@ -1,25 +1,17 @@
 "use strict"
 
-/* 1) to do list:
--input de texto para ingresar la tarea
--input para la fecha
--botón de submit
--validar ambos campos y requerir que la fecha no sea anterior
--poder dar 3 colores a las tareas
--que las tareas se añadan al dom y al local storage
--poder borrar las tareas
--crear un área separada donde colocar las tareas realizadas
-*/
-
 const form = document.getElementById ("form")
 const taskInput = document.getElementById ("taskInput")
 const dateInput = document.getElementById ("dateInput")
 const colorInput = document.getElementById ("colorInput")
 const list = document.getElementById ("list")
+const finishedTasks = document.getElementById ("finished-tasks")
+const finishedList = document.getElementById ("finished-list")
+const taskList = document.getElementById ("task-list")
 const validation = document.getElementById ("validation")
 
-const validationSign = ((a)=>{
-    validation.textContent = `${a}`
+const validationSign = ((text)=>{
+    validation.textContent = `${text}`
         validation.removeAttribute("hidden")
         setTimeout(()=>{
             validation.setAttribute("hidden",true)     
@@ -27,28 +19,33 @@ const validationSign = ((a)=>{
 })
 
 const validateTaskAndDate = ()=>{
-    const regEx = /^[a-z]+\s*/gm
-    if (regEx.test (taskInput.value)) {
+    if (taskInput.value !== "") {
         let listItem = `${taskInput.value}.`
         let current = new Date
         let selected = new Date (dateInput.value)
         let ms1 = current.getTime()
         let ms2 = selected.getTime()
-            if (dateInput.value == "") validationSign("Debe ingresar una fecha")
-            else if (ms2 < ms1) validationSign("La fecha no puede ser anterior a la de hoy")
-            else{
-                const li = document.createElement ("LI")
-                let id = Math.random()
-                li.setAttribute("id", id)
-                li.setAttribute("draggable",true)
-                li.innerHTML = `${listItem}  ${selected.toLocaleDateString()}  <i class="far fa-times-circle"></i>`
-                li.style.backgroundColor = colorInput.value
-                list.appendChild(li)
-                localStorage.setItem (li.getAttribute("id"),li.innerHTML)
-                form.reset()
-            }
+        
+        if (dateInput.value == "") validationSign("Debe ingresar una fecha")
+        else if (ms2 < ms1) validationSign("La fecha no puede ser anterior a la de hoy")
+        else {
+            const li = document.createElement ("LI")
+            let id = Math.random()
+            li.setAttribute("id", id)
+            li.setAttribute("draggable",true)
+            li.innerHTML = `${listItem}  ${selected.toLocaleDateString()}  <i class="far fa-times-circle" id="close"></i>`
+            li.style.backgroundColor = colorInput.value
+            list.appendChild(li)
+            localStorage.setItem (li.getAttribute("id"),li.innerHTML)
+            form.reset()
         }
-    else validationSign("Debe agregar una tarea")
+    } else validationSign("Debe agregar una tarea")
+}
+
+const taskDelete=(e,listSelected)=>{
+    const del = e.target.parentElement
+    listSelected.removeChild(del)
+    localStorage.removeItem(del.getAttribute("id"))
 }
 
 form.addEventListener ("submit",(e)=>{
@@ -56,17 +53,7 @@ form.addEventListener ("submit",(e)=>{
     validateTaskAndDate()
 })
 
-//borrar individualmente tareas de la lista de tareas pendientes
-list.addEventListener ("click",(e)=>{
-    const del = e.target.parentElement
-    list.removeChild(del)
-    localStorage.removeItem(del.getAttribute("id"))
-})
-
 // Drag & Drop de las tareas de list a finished-tasks
-const finishedTasks = document.getElementById ("finished-tasks")
-const finishedList = document.getElementById ("finished-list")
-
 list.addEventListener("dragstart",(e)=> e.dataTransfer.setData("text/plain",e.target.id))
 
 list.addEventListener("drag",(e)=> e.target.classList.add("active-task"))
@@ -82,16 +69,20 @@ finishedTasks.addEventListener("drop",(e)=>{
     finishedList.appendChild(list.removeChild(element))
 })
 
-//borrar individualmente tareas de la lista de tareas finalizadas
-finishedList.addEventListener ("click",(e)=>{
-    const del = e.target.parentElement
-    finishedList.removeChild(del)
-    localStorage.removeItem(del.getAttribute("id"))
+//mobile browser drag&drop de list a finished-tasks
+let touch    
+
+list.addEventListener('touchmove',(e)=> {
+    touch = e.target
+    e.target.classList.add("active-task")
+})
+
+list.addEventListener('touchend',(e)=>{
+    finishedList.appendChild(list.removeChild(touch))
+    e.target.classList.remove("active-task")
 })
 
 // Drag & Drop de las tareas de finished-tasks a task-list
-const taskList = document.getElementById ("task-list")
-
 finishedTasks.addEventListener("dragstart",(e)=> e.dataTransfer.setData("text/plain",e.target.id))
 
 finishedTasks.addEventListener("drag",(e)=> e.target.classList.add("active-task"))
@@ -107,6 +98,14 @@ taskList.addEventListener("drop",(e)=>{
     list.appendChild(finishedList.removeChild(element))
 })
 
+//borrar individualmente tareas de la lista de tareas pendientes
+list.addEventListener ("click",(e)=>{ if(e.target.id === "close") taskDelete(e,list)})
+
+//borrar individualmente tareas de la lista de tareas finalizadas
+finishedList.addEventListener ("click",(e)=>{ if(e.target.id === "close") taskDelete(e,finishedList)})
+
+
+//carga de tareas guardadas en localStorage
 addEventListener('load',()=>{
     if (localStorage.length > 0){
         const fragment = document.createDocumentFragment()    

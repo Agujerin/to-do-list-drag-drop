@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,13 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 </head>
 <body>
-        <!-- PRÁCTICA 1: to do list + drag&drop -->
+    <!-- To Do list + drag&drop -->
     <div class="form-container" id="formContainer">
-        <h1>TO DO LIST</h1>
-        <form action="" id="form">
+        <h1 class="title">TO DO LIST</h1>
+        <form action="submit" class="form" id="form">
             <input type="text" placeholder="Ingrese su tarea" class="task-input" id="taskInput">
-            <input type="datetime-local" class="date-input" id="dateInput">
-            <input type="color" class="color-input" id="colorInput" value="#83d8f2">
+            <input type="date" class="date-input" id="dateInput">
+            <input type="color" class="color-input" id="colorInput" value="#83f28c">
             <input type="submit" class="button" id="submitButton">
         </form>
         <h5 class="validation" id="validation" hidden></h5>
@@ -23,11 +23,11 @@
     
     <div class="list-container" id="listContainer">
         <div class="task-list" id="task-list">
-            <h4 class="task-list__title">Tareas pendientes</h4>
+            <h4 class="task-list__title">TAREAS PENDIENTES</h4>
             <ul class="list" id="list"></ul>
         </div>    
         <div class="finished-tasks" id="finished-tasks">
-            <h4 class="finished-tasks__title">Tareas terminadas</h4>
+            <h4 class="task-list__title">TAREAS TERMINADAS</h4>
             <ul class="list" id="finished-list"></ul>
         </div>
     </div>
