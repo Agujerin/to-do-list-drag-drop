@@ -36,7 +36,7 @@ const validateTaskAndDate = ()=>{
             li.innerHTML = `${listItem}  ${selected.toLocaleDateString()}  <i class="far fa-times-circle" id="close"></i>`
             li.style.backgroundColor = colorInput.value
             list.appendChild(li)
-            localStorage.setItem (li.getAttribute("id"),li.innerHTML)
+            localStorage.setItem(li.getAttribute("id"),li.innerHTML)
             form.reset()
         }
     } else validationSign("Debe agregar una tarea")
@@ -110,14 +110,17 @@ addEventListener('load',()=>{
     if (localStorage.length > 0){
         const fragment = document.createDocumentFragment()    
         for (let i=0; i< localStorage.length; i++){
-            const li = document.createElement ("LI")
-            let id = localStorage.key(i)
-            li.setAttribute("id", id)
-            li.setAttribute("draggable",true)
-            li.innerHTML = `${localStorage.getItem(localStorage.key(i))}`
-            li.style.backgroundColor = colorInput.value
-            fragment.appendChild(li)
+            if(localStorage.key(i) >= 0 && localStorage.key(i) <= 1){
+                console.log(localStorage.key(i))
+                const li = document.createElement ("LI")
+                let id = localStorage.key(i)
+                li.setAttribute("id", id)
+                li.setAttribute("draggable",true)
+                li.innerHTML = `${localStorage.getItem(localStorage.key(i))}`
+                li.style.backgroundColor = colorInput.value
+                fragment.appendChild(li)
             }
+        }
         list.appendChild(fragment)
     }
 })
